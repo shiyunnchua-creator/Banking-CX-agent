@@ -4,11 +4,10 @@ A teaching reference for building a customer-experience (CX) conversational agen
 
 Built with **LangChain + LangGraph + Claude (Anthropic `claude-sonnet-4-6`)**, with a fully mocked banking backend so it runs end to end with no real systems.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/USERNAME/REPO/blob/main/notebooks/Banking_CX_Agent_Session.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/shiyunnchua-creator/Banking-CX-agent/blob/main/notebooks/Banking_CX_Agent_Session.ipynb)
 
 > **Run it now (no local setup, no disk space needed):** click the **Open in Colab** badge above — Colab runs entirely in the cloud — then add your Anthropic API key when prompted and run all cells. The three use cases play out as a scripted show-and-tell.
 >
-> *After publishing, replace `USERNAME/REPO` in the badge link with your GitHub path (e.g. `shiyunnchua-creator/meridian-cx-agent`).*
 
 > **Your API key is never stored or published.** The notebook reads it from a `getpass` prompt at runtime; nothing is written to a file or a cell. See [SECURITY.md](SECURITY.md) for the full explanation and a 60-second pre-publish checklist.
 
