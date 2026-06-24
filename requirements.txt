@@ -1,0 +1,8 @@
+langchain
+langgraph
+langchain-anthropic
+langchain-community
+pydantic
+pandas
+python-dotenv
+ipywidgets

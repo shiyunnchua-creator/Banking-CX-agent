@@ -1,0 +1,72 @@
+[
+  {
+    "txn_id": "TXN-500021",
+    "customer_id": "CUST-88102",
+    "card_id": "CARD-3392",
+    "date": "2026-06-21T13:04:00",
+    "merchant": "BrightMart Groceries",
+    "merchant_category": "groceries",
+    "amount": 84.30,
+    "currency": "GBP",
+    "location": "Manchester, UK",
+    "status": "posted",
+    "channel": "chip_and_pin",
+    "flags": []
+  },
+  {
+    "txn_id": "TXN-500022",
+    "customer_id": "CUST-88102",
+    "card_id": "CARD-3392",
+    "date": "2026-06-21T13:05:00",
+    "merchant": "BrightMart Groceries",
+    "merchant_category": "groceries",
+    "amount": 84.30,
+    "currency": "GBP",
+    "location": "Manchester, UK",
+    "status": "posted",
+    "channel": "chip_and_pin",
+    "flags": ["possible_duplicate"]
+  },
+  {
+    "txn_id": "TXN-500040",
+    "customer_id": "CUST-88210",
+    "card_id": "CARD-6650",
+    "date": "2026-06-19T08:22:00",
+    "merchant": "NimbusCloud Ltd",
+    "merchant_category": "digital_subscription",
+    "amount": 14.99,
+    "currency": "GBP",
+    "location": "Online",
+    "status": "posted",
+    "channel": "card_not_present",
+    "flags": ["recurring_merchant", "customer_unrecognized"]
+  },
+  {
+    "txn_id": "TXN-500041",
+    "customer_id": "CUST-88210",
+    "card_id": "CARD-6650",
+    "date": "2026-05-19T08:22:00",
+    "merchant": "NimbusCloud Ltd",
+    "merchant_category": "digital_subscription",
+    "amount": 14.99,
+    "currency": "GBP",
+    "location": "Online",
+    "status": "posted",
+    "channel": "card_not_present",
+    "flags": ["recurring_merchant"]
+  },
+  {
+    "txn_id": "TXN-500077",
+    "customer_id": "CUST-88345",
+    "card_id": "CARD-1180",
+    "date": "2026-06-23T02:47:00",
+    "merchant": "LuxGadgetWorld",
+    "merchant_category": "electronics",
+    "amount": 1890.00,
+    "currency": "USD",
+    "location": "Manila, PH",
+    "status": "pending",
+    "channel": "card_not_present",
+    "flags": ["foreign_country", "high_value", "outside_home_location", "possible_fraud"]
+  }
+]

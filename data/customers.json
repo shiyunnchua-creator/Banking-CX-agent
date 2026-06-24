@@ -1,0 +1,53 @@
+[
+  {
+    "customer_id": "CUST-88102",
+    "name": "Daniel Okafor",
+    "dob": "1989-04-12",
+    "home_location": "Manchester, UK",
+    "phone_last4": "7741",
+    "email": "daniel.okafor@example.com",
+    "kyc_status": "verified",
+    "segment": "mass_affluent",
+    "accounts": [
+      {"account_id": "ACC-5567", "type": "current", "currency": "GBP", "balance": 4280.55, "status": "active"},
+      {"account_id": "ACC-5568", "type": "savings", "currency": "GBP", "balance": 16500.00, "status": "active"}
+    ],
+    "cards": [
+      {"card_id": "CARD-3391", "type": "debit", "last4": "4417", "linked_account": "ACC-5567", "status": "active", "contactless": true},
+      {"card_id": "CARD-3392", "type": "credit", "last4": "9920", "credit_limit": 6000, "balance": 1240.18, "status": "active"}
+    ]
+  },
+  {
+    "customer_id": "CUST-88210",
+    "name": "Aisha Rahman",
+    "dob": "1995-11-03",
+    "home_location": "Birmingham, UK",
+    "phone_last4": "2210",
+    "email": "aisha.rahman@example.com",
+    "kyc_status": "verified",
+    "segment": "young_professional",
+    "accounts": [
+      {"account_id": "ACC-7781", "type": "current", "currency": "GBP", "balance": 1190.10, "status": "active"}
+    ],
+    "cards": [
+      {"card_id": "CARD-6650", "type": "debit", "last4": "3082", "linked_account": "ACC-7781", "status": "active", "contactless": true}
+    ]
+  },
+  {
+    "customer_id": "CUST-88345",
+    "name": "George Whitfield",
+    "dob": "1972-06-28",
+    "home_location": "Leeds, UK",
+    "phone_last4": "5532",
+    "email": "george.whitfield@example.com",
+    "kyc_status": "verified",
+    "segment": "premier",
+    "accounts": [
+      {"account_id": "ACC-9001", "type": "current", "currency": "GBP", "balance": 9850.00, "status": "active"},
+      {"account_id": "ACC-9002", "type": "savings", "currency": "GBP", "balance": 42100.00, "status": "active"}
+    ],
+    "cards": [
+      {"card_id": "CARD-1180", "type": "credit", "last4": "7705", "credit_limit": 12000, "balance": 3380.00, "status": "active"}
+    ]
+  }
+]

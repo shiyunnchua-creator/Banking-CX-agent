@@ -1,0 +1,11 @@
+{
+  "credit_cards": [
+    {"product_id": "CC-EVERYDAY", "name": "Meridian Everyday", "annual_fee_gbp": 0, "apr": 24.9, "intro_offer": "0% on purchases for 6 months", "min_income_gbp": 12000},
+    {"product_id": "CC-REWARDS", "name": "Meridian Rewards", "annual_fee_gbp": 30, "apr": 26.9, "intro_offer": "1% cashback on all spend", "min_income_gbp": 15000},
+    {"product_id": "CC-PREMIER", "name": "Meridian Premier", "annual_fee_gbp": 195, "apr": 22.9, "intro_offer": "Airport lounge access + travel insurance", "min_income_gbp": 50000}
+  ],
+  "loans": [
+    {"product_id": "LOAN-PERSONAL", "name": "Meridian Personal Loan", "min_gbp": 1000, "max_gbp": 25000, "term_months_min": 12, "term_months_max": 60, "representative_apr": 6.4, "secured": false},
+    {"product_id": "LOAN-HOMEOWNER", "name": "Meridian Homeowner Loan", "min_gbp": 10000, "max_gbp": 100000, "term_months_min": 36, "term_months_max": 120, "representative_apr": 5.1, "secured": true}
+  ]
+}

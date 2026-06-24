@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Charge Dispute Policy",
+    "topic": "disputes",
+    "content": "Meridian Bank disputes follow Mastercard/Visa chargeback rules. Duplicate charges (same merchant, same amount, within 48 hours) qualify for fast-track provisional credit up to GBP 100 without further review. Unrecognised recurring subscriptions require a 24-hour merchant trace before a dispute is raised. Suspected fraud (card-not-present, foreign location, value over GBP 500, or outside the customer's home country) must be escalated to the Fraud Operations team and the card frozen before any credit is issued. Provisional credit at the agent tier is capped at GBP 100; anything above requires human approval."
+  },
+  {
+    "title": "Identity Verification Standard",
+    "topic": "security",
+    "content": "Before any account-specific action, verify the customer with at least two factors: full name plus one of (card last 4 digits, date of birth, or registered phone last 4). High-risk actions (raising a dispute, freezing a card, issuing credit) require a successful verify_identity check in the same session. Never reveal full card numbers, balances, or personal data before verification."
+  },
+  {
+    "title": "Provisional Credit Thresholds",
+    "topic": "disputes",
+    "content": "Agent-tier auto-resolution: clear duplicate charges up to GBP 100 may be credited immediately after customer confirmation. Medium-confidence cases (ambiguous merchant, partial evidence) must be triaged: gather transaction history, confirm the customer's claim, compile a case packet, then hand to the Disputes team. Low-confidence or fraud cases go straight to Fraud Operations."
+  },
+  {
+    "title": "Credit Card Products",
+    "topic": "credit_cards",
+    "content": "Meridian Everyday (0% intro 6 months, no annual fee, 24.9% APR), Meridian Rewards (1% cashback, GBP 30 annual fee, 26.9% APR), Meridian Premier (lounge access, travel insurance, GBP 195 annual fee, 22.9% APR). Eligibility requires UK residency, age 18+, minimum income GBP 12,000, and a soft credit check. Premier requires income GBP 50,000+."
+  },
+  {
+    "title": "Personal Loan Products",
+    "topic": "loans",
+    "content": "Meridian Personal Loan: GBP 1,000-25,000, 12-60 months, representative APR from 6.4%. Meridian Homeowner Loan (secured): up to GBP 100,000. Soft-search quote available without affecting credit score. Affordability assessment uses income and existing commitments. Indicative monthly repayment = principal * (r/12) / (1 - (1 + r/12)^-n) where r is APR and n is months."
+  },
+  {
+    "title": "Escalation and Handoff Model",
+    "topic": "governance",
+    "content": "Three escalation routes: Disputes team (Priya, Disputes Lead) for compiled medium-confidence dispute packets; Fraud Operations (Marcus, Fraud Duty Officer) for suspected fraud; Lending team (Sara, Lending Officer) for loan and credit applications requiring human credit decisions. Every escalation must include a reference ID, conversation ID, category, confidence level, and the compiled case summary."
+  },
+  {
+    "title": "Audit and Compliance Standard",
+    "topic": "governance",
+    "content": "Every agent action that reads or changes customer data must be logged with: reference ID, conversation ID, timestamp, customer location, category, confidence level, tool/action taken, and outcome. Audit records are immutable and retained for 7 years to satisfy FCA and internal compliance review."
+  }
+]
