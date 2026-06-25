@@ -1,0 +1,182 @@
+<svg viewBox="0 0 1200 1660" xmlns="http://www.w3.org/2000/svg" role="img" font-family="'Segoe UI', -apple-system, Helvetica, Arial, sans-serif">
+  <title>Banking CX agent (Mia) — workflow across three use cases</title>
+  <desc>Customers reach the Mia agent via website chatbot or app help centre. The agent classifies intent into charge disputes, credit card applications, or loan enquiries, verifies identity, calls tools that pull data from internal banking systems, then a confidence router either resolves the case at agent level or escalates to a human CX team. An audit trail logs every step.</desc>
+
+  <!-- canvas -->
+  <rect x="0" y="0" width="1200" height="1660" fill="#FBFAF7"/>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5F5E5A"/>
+    </marker>
+  </defs>
+
+  <style>
+    .h   { font-size:15px; font-weight:700; }
+    .hb  { font-size:16px; font-weight:700; }
+    .sub { font-size:11.5px; }
+    .mono{ font-family:'Consolas','SF Mono',monospace; font-size:10.5px; }
+    .lbl { font-size:11px; font-weight:600; fill:#5F5E5A; }
+    .tier{ font-size:13px; font-weight:700; }
+    .edge{ stroke:#888780; stroke-width:1.6; fill:none; marker-end:url(#arrow); }
+  </style>
+
+  <!-- ===== title ===== -->
+  <text x="40" y="38" font-size="20" font-weight="700" fill="#26215C">Mia — Banking CX Agent · workflow across 3 use cases</text>
+
+  <!-- ===== legend ===== -->
+  <g transform="translate(792,22)">
+    <rect x="0" y="0" width="368" height="26" rx="6" fill="#FFFFFF" stroke="#D3D1C7"/>
+    <rect x="10" y="8" width="11" height="11" rx="2" fill="#E1F5EE" stroke="#1D9E75"/>
+    <text x="26" y="17" font-size="10.5" fill="#2C2C2A">Resolve</text>
+    <rect x="92" y="8" width="11" height="11" rx="2" fill="#FAECE7" stroke="#D85A30"/>
+    <text x="108" y="17" font-size="10.5" fill="#2C2C2A">Triage + escalate</text>
+    <rect x="218" y="8" width="11" height="11" rx="2" fill="#FBEAF0" stroke="#D4537E"/>
+    <text x="234" y="17" font-size="10.5" fill="#2C2C2A">Escalate now</text>
+  </g>
+
+  <!-- ===== START ===== -->
+  <rect x="440" y="62" width="320" height="42" rx="21" fill="#EEEDFE" stroke="#7F77DD" stroke-width="1.5"/>
+  <text x="600" y="88" text-anchor="middle" class="hb" fill="#26215C">A customer has a question</text>
+  <line x1="600" y1="104" x2="600" y2="128" class="edge"/>
+
+  <!-- ===== channels ===== -->
+  <text x="600" y="124" text-anchor="middle" class="lbl">reaches out via</text>
+  <rect x="332" y="132" width="232" height="52" rx="10" fill="#E6F1FB" stroke="#378ADD" stroke-width="1.4"/>
+  <text x="448" y="158" text-anchor="middle" class="h" fill="#0C447C">Website chatbot</text>
+  <text x="448" y="174" text-anchor="middle" class="sub" fill="#185FA5">Self-service web widget</text>
+
+  <rect x="636" y="132" width="232" height="52" rx="10" fill="#E6F1FB" stroke="#378ADD" stroke-width="1.4"/>
+  <text x="752" y="158" text-anchor="middle" class="h" fill="#0C447C">App help centre</text>
+  <text x="752" y="174" text-anchor="middle" class="sub" fill="#185FA5">In-app support chat</text>
+
+  <path d="M448,184 L448,206 Q448,214 456,214 L592,214" class="edge"/>
+  <path d="M752,184 L752,206 Q752,214 744,214 L608,214" class="edge"/>
+
+  <!-- ===== agent ===== -->
+  <rect x="380" y="214" width="440" height="64" rx="12" fill="#EEEDFE" stroke="#7F77DD" stroke-width="2"/>
+  <text x="600" y="240" text-anchor="middle" class="hb" fill="#26215C">Mia — Banking CX Agent (LLM)</text>
+  <text x="600" y="260" text-anchor="middle" class="sub" fill="#534AB7">Interprets the goal · classifies the journey</text>
+  <line x1="600" y1="278" x2="600" y2="302" class="edge"/>
+
+  <!-- ===== identity gate ===== -->
+  <rect x="396" y="302" width="408" height="58" rx="10" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="2" stroke-dasharray="5 3"/>
+  <text x="600" y="326" text-anchor="middle" class="h" fill="#2C2C2A">🔒 Identity gate · verify_identity</text>
+  <text x="600" y="345" text-anchor="middle" class="sub" fill="#5F5E5A">Verify before acting — required before any account read</text>
+  <line x1="600" y1="360" x2="600" y2="392" class="edge"/>
+  <text x="600" y="386" text-anchor="middle" class="lbl">route to the matching journey</text>
+
+  <!-- fan to 3 journeys -->
+  <path d="M600,392 Q600,400 560,400 L220,400 L220,418" class="edge"/>
+  <path d="M600,400 L600,418" class="edge"/>
+  <path d="M600,392 Q600,400 640,400 L980,400 L980,418" class="edge"/>
+
+  <!-- ===== JOURNEY COLUMNS ===== -->
+  <!-- col 1: disputes -->
+  <rect x="50" y="418" width="340" height="208" rx="12" fill="#FFFFFF" stroke="#D3D1C7"/>
+  <rect x="50" y="418" width="340" height="30" rx="12" fill="#EEEDFE"/>
+  <rect x="50" y="436" width="340" height="12" fill="#EEEDFE"/>
+  <text x="220" y="438" text-anchor="middle" class="h" fill="#26215C">1 · Charge disputes</text>
+  <text x="64" y="470" class="lbl">Pull data from</text>
+  <text x="64" y="487" class="sub" fill="#2C2C2A">Core banking · transactions DB</text>
+  <text x="64" y="503" class="sub" fill="#2C2C2A">Card processor · dispute policy KB</text>
+  <text x="64" y="528" class="lbl">Tools</text>
+  <text x="64" y="545" class="mono" fill="#444441">get_transaction · check_dispute_policy</text>
+  <text x="64" y="561" class="mono" fill="#444441">raise_dispute · issue_provisional_credit</text>
+  <text x="64" y="577" class="mono" fill="#444441">freeze_card · escalate_to_human</text>
+  <text x="64" y="601" class="sub" fill="#5F5E5A" font-style="italic">Built end to end</text>
+
+  <!-- col 2: card apps -->
+  <rect x="430" y="418" width="340" height="208" rx="12" fill="#FFFFFF" stroke="#D3D1C7"/>
+  <rect x="430" y="418" width="340" height="30" rx="12" fill="#EEEDFE"/>
+  <rect x="430" y="436" width="340" height="12" fill="#EEEDFE"/>
+  <text x="600" y="438" text-anchor="middle" class="h" fill="#26215C">2 · Credit card applications</text>
+  <text x="444" y="470" class="lbl">Pull data from</text>
+  <text x="444" y="487" class="sub" fill="#2C2C2A">Product catalogue · KYC / identity</text>
+  <text x="444" y="503" class="sub" fill="#2C2C2A">Credit bureau (decision)</text>
+  <text x="444" y="528" class="lbl">Tools</text>
+  <text x="444" y="545" class="mono" fill="#444441">get_card_products</text>
+  <text x="444" y="561" class="mono" fill="#444441">check_card_eligibility</text>
+  <text x="444" y="577" class="mono" fill="#444441">start_card_application</text>
+  <text x="444" y="601" class="sub" fill="#5F5E5A" font-style="italic">Credit decision always → Lending</text>
+
+  <!-- col 3: loans -->
+  <rect x="810" y="418" width="340" height="208" rx="12" fill="#FFFFFF" stroke="#D3D1C7"/>
+  <rect x="810" y="418" width="340" height="30" rx="12" fill="#EEEDFE"/>
+  <rect x="810" y="436" width="340" height="12" fill="#EEEDFE"/>
+  <text x="980" y="438" text-anchor="middle" class="h" fill="#26215C">3 · Loan enquiries</text>
+  <text x="824" y="470" class="lbl">Pull data from</text>
+  <text x="824" y="487" class="sub" fill="#2C2C2A">Loan product catalogue</text>
+  <text x="824" y="503" class="sub" fill="#2C2C2A">Repayment calculator · KYC</text>
+  <text x="824" y="528" class="lbl">Tools</text>
+  <text x="824" y="545" class="mono" fill="#444441">get_loan_products</text>
+  <text x="824" y="561" class="mono" fill="#444441">estimate_repayment</text>
+  <text x="824" y="577" class="mono" fill="#444441">start_loan_enquiry</text>
+  <text x="824" y="601" class="sub" fill="#5F5E5A" font-style="italic">Quotes only · formal enquiry → Lending</text>
+
+  <!-- converge to router -->
+  <path d="M220,626 L220,648 Q220,656 228,656 L592,656" class="edge"/>
+  <path d="M600,626 L600,656" class="edge"/>
+  <path d="M980,626 L980,648 Q980,656 972,656 L608,656" class="edge"/>
+
+  <!-- ===== confidence router ===== -->
+  <rect x="338" y="656" width="524" height="62" rx="12" fill="#EEEDFE" stroke="#7F77DD" stroke-width="2"/>
+  <text x="600" y="681" text-anchor="middle" class="hb" fill="#26215C">Confidence router · CaseAssessment (0–1)</text>
+  <text x="600" y="701" text-anchor="middle" class="sub" fill="#534AB7">Agent loops tools until it has evidence · "when in doubt, route down a tier"</text>
+
+  <!-- fan to 3 tiers -->
+  <path d="M600,718 Q600,726 560,726 L220,726 L220,748" class="edge"/>
+  <path d="M600,726 L600,748" class="edge"/>
+  <path d="M600,718 Q600,726 640,726 L980,726 L980,748" class="edge"/>
+
+  <!-- ===== tier outcomes ===== -->
+  <rect x="50" y="748" width="340" height="116" rx="12" fill="#E1F5EE" stroke="#1D9E75" stroke-width="1.6"/>
+  <text x="220" y="773" text-anchor="middle" class="tier" fill="#0F6E56">HIGH · confidence ≥ 0.85</text>
+  <text x="220" y="795" text-anchor="middle" class="h" fill="#04342C">Resolve at agent level</text>
+  <text x="220" y="815" text-anchor="middle" class="sub" fill="#0F6E56">Confirm action with customer, then act</text>
+  <text x="220" y="834" text-anchor="middle" class="sub" fill="#0F6E56">e.g. clear duplicate &lt; £100 → dispute</text>
+  <text x="220" y="852" text-anchor="middle" class="sub" fill="#0F6E56">+ provisional credit</text>
+
+  <rect x="430" y="748" width="340" height="116" rx="12" fill="#FAECE7" stroke="#D85A30" stroke-width="1.6"/>
+  <text x="600" y="773" text-anchor="middle" class="tier" fill="#993C1D">MEDIUM · 0.5 – 0.85</text>
+  <text x="600" y="795" text-anchor="middle" class="h" fill="#4A1B0C">Triage → compile packet → escalate</text>
+  <text x="600" y="815" text-anchor="middle" class="sub" fill="#993C1D">Gather evidence, hand a ready summary</text>
+  <text x="600" y="834" text-anchor="middle" class="sub" fill="#993C1D">to the right team</text>
+  <text x="600" y="852" text-anchor="middle" class="sub" fill="#993C1D">e.g. unrecognised subscription</text>
+
+  <rect x="810" y="748" width="340" height="116" rx="12" fill="#FBEAF0" stroke="#D4537E" stroke-width="1.6"/>
+  <text x="980" y="773" text-anchor="middle" class="tier" fill="#993556">LOW · confidence &lt; 0.5</text>
+  <text x="980" y="795" text-anchor="middle" class="h" fill="#4B1528">Escalate immediately</text>
+  <text x="980" y="815" text-anchor="middle" class="sub" fill="#993556">Take safe action first, then hand off</text>
+  <text x="980" y="834" text-anchor="middle" class="sub" fill="#993556">e.g. suspected fraud → freeze_card</text>
+  <text x="980" y="852" text-anchor="middle" class="sub" fill="#993556">→ Fraud team</text>
+
+  <!-- HIGH terminal -->
+  <line x1="220" y1="864" x2="220" y2="906" class="edge"/>
+  <rect x="70" y="906" width="300" height="46" rx="23" fill="#E1F5EE" stroke="#1D9E75" stroke-width="1.6"/>
+  <text x="220" y="928" text-anchor="middle" class="h" fill="#04342C">✓ Resolved in chat</text>
+  <text x="220" y="943" text-anchor="middle" class="sub" fill="#0F6E56">logged &amp; closed — no human needed</text>
+
+  <!-- MEDIUM + LOW to human teams -->
+  <path d="M600,864 L600,978" class="edge"/>
+  <path d="M980,864 L980,920 Q980,978 922,978 L862,978" class="edge"/>
+  <path d="M430,820 Q300,820 290,860 L262,860" stroke="#888780" stroke-width="1.4" fill="none" stroke-dasharray="4 3"/>
+
+  <!-- ===== human CX teams ===== -->
+  <rect x="360" y="978" width="500" height="70" rx="12" fill="#E6F1FB" stroke="#378ADD" stroke-width="1.6"/>
+  <text x="610" y="1004" text-anchor="middle" class="hb" fill="#0C447C">Escalate to human CX personnel</text>
+  <text x="610" y="1025" text-anchor="middle" class="sub" fill="#185FA5">Disputes team · Fraud team · Lending team</text>
+  <text x="610" y="1041" text-anchor="middle" class="sub" fill="#185FA5">Receives ref ID, conversation ID, category, confidence &amp; case summary</text>
+
+  <!-- ===== audit trail banner ===== -->
+  <rect x="50" y="1086" width="1100" height="64" rx="12" fill="#2C2C2A"/>
+  <text x="74" y="1114" class="hb" fill="#F1EFE8">Audit trail · Governance</text>
+  <text x="74" y="1134" class="sub" fill="#D3D1C7">Runs across every step above — each read &amp; action logs: reference ID · conversation ID · timestamp · location · category · confidence · action · outcome</text>
+  <!-- dashed connectors hinting cross-cut -->
+  <line x1="220" y1="952" x2="220" y2="1086" stroke="#B4B2A9" stroke-width="1.2" stroke-dasharray="3 4"/>
+  <line x1="610" y1="1048" x2="610" y2="1086" stroke="#B4B2A9" stroke-width="1.2" stroke-dasharray="3 4"/>
+
+  <!-- footnote -->
+  <text x="50" y="1184" font-size="11" fill="#888780">Two guardrails are enforced inside the tools: verify before acting (identity gate) and confirm before changing (state-changing tools need an explicit "yes").</text>
+  <text x="50" y="1202" font-size="11" fill="#888780">Built with LangChain + LangGraph + Claude. Disputes are built end to end; card applications and loan enquiries are scaffolds that always route the credit decision to Lending.</text>
+</svg>
