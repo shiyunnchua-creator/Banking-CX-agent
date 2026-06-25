@@ -93,6 +93,10 @@ Run scripted conversations across all three confidence tiers and read the audit 
 
 ## Part 2 — The three use cases
 
+## Workflow
+
+![Banking CX agent workflow across the three use cases](assets/banking-cx-agent-workflow.png)
+
 | Use case | Built? | Typical tiers | Tools used |
 | --- | --- | --- | --- |
 | **Charge disputes** | End to end | high / medium / low | verify_identity, get_transaction, check_dispute_policy, raise_dispute, issue_provisional_credit, freeze_card, escalate_to_human |
