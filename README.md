@@ -93,6 +93,8 @@ Run scripted conversations across all three confidence tiers and read the audit 
 
 ## Part 2 — The three use cases
 
+Live demo (no setup): a scripted UI walkthrough of the three journeys and confidence routing. For genuine Claude reasoning, run the Colab notebook.
+
 ## Workflow
 
 ![Banking CX agent workflow across the three use cases](assets/banking-cx-agent-workflow.svg)
