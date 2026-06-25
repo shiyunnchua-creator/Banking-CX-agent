@@ -95,7 +95,7 @@ Run scripted conversations across all three confidence tiers and read the audit 
 
 ## Workflow
 
-![Banking CX agent workflow across the three use cases](assets/banking-cx-agent-workflow.png)
+![Banking CX agent workflow across the three use cases](assets/banking-cx-agent-workflow.svg)
 
 | Use case | Built? | Typical tiers | Tools used |
 | --- | --- | --- | --- |
