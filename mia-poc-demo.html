@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mia — Banking CX Agent (POC demo)</title>
+<style>
+  :root{
+    --purple:#7F77DD; --purple-d:#26215C; --purple-l:#EEEDFE;
+    --blue:#378ADD; --blue-d:#0C447C; --blue-l:#E6F1FB;
+    --green:#1D9E75; --green-d:#0F6E56; --green-l:#E1F5EE;
+    --amber:#D85A30; --amber-d:#993C1D; --amber-l:#FAECE7;
+    --pink:#D4537E; --pink-d:#993556; --pink-l:#FBEAF0;
+    --ink:#2C2C2A; --muted:#5F5E5A; --line:#D3D1C7; --bg:#FBFAF7; --card:#FFFFFF;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:var(--purple-d);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  header .logo{width:34px;height:34px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+  header h1{font-size:17px;margin:0;font-weight:700}
+  header .sub{font-size:12px;opacity:.8;margin-top:1px}
+  header .spacer{flex:1}
+  .channel{display:flex;align-items:center;gap:6px;font-size:12px}
+  .channel select{font:inherit;font-size:12px;padding:5px 8px;border-radius:8px;border:1px solid #4a4380;background:#39327a;color:#fff}
+  .btn-reset{font:inherit;font-size:12px;background:transparent;color:#fff;border:1px solid #5a5398;border-radius:8px;padding:6px 12px;cursor:pointer}
+  .btn-reset:hover{background:#39327a}
+
+  .wrap{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;max-width:1180px;margin:16px auto;padding:0 16px;align-items:start}
+  @media(max-width:880px){.wrap{grid-template-columns:1fr}}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+  .panel h2{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:0;padding:12px 16px;border-bottom:1px solid var(--line);background:#fdfcf9}
+
+  /* chat */
+  .chat{height:520px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+  .msg{max-width:82%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.45;white-space:pre-wrap}
+  .msg.user{align-self:flex-end;background:var(--blue-d);color:#fff;border-bottom-right-radius:4px}
+  .msg.bot{align-self:flex-start;background:var(--purple-l);color:var(--purple-d);border-bottom-left-radius:4px}
+  .msg.sys{align-self:center;background:#f1efe8;color:var(--muted);font-size:12px;border-radius:10px;text-align:center;max-width:90%}
+  .confirm{display:flex;gap:8px;margin-top:8px}
+  .confirm button{font:inherit;font-size:13px;border-radius:9px;padding:7px 14px;cursor:pointer;border:1px solid}
+  .yes{background:var(--green);color:#fff;border-color:var(--green)}
+  .no{background:#fff;color:var(--muted);border-color:var(--line)}
+  .typing{align-self:flex-start;color:var(--muted);font-size:13px;font-style:italic}
+
+  .composer{border-top:1px solid var(--line);padding:12px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .chip{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 11px;cursor:pointer;color:var(--muted)}
+  .chip:hover{background:var(--purple-l);color:var(--purple-d);border-color:var(--purple)}
+  .inrow{display:flex;gap:8px}
+  .inrow input{flex:1;font:inherit;font-size:14px;padding:11px 13px;border:1px solid var(--line);border-radius:10px}
+  .inrow input:focus{outline:none;border-color:var(--purple)}
+  .inrow button{font:inherit;font-weight:600;background:var(--purple);color:#fff;border:none;border-radius:10px;padding:0 18px;cursor:pointer}
+  .inrow button:hover{background:var(--purple-d)}
+
+  /* behind the scenes */
+  .bts{padding:14px 16px;display:flex;flex-direction:column;gap:14px}
+  .bts .empty{color:var(--muted);font-size:13px;font-style:italic}
+  .field{font-size:13px}
+  .field .k{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .field .v{font-weight:600;margin-top:2px}
+  .pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px}
+  .toolchips{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+  .tc{font-family:'Consolas',monospace;font-size:11px;background:#f1efe8;border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:#444441}
+  .meter{height:9px;border-radius:6px;background:#eceae3;overflow:hidden;margin-top:5px}
+  .meter > div{height:100%;border-radius:6px}
+
+  .audit{border-top:1px solid var(--line)}
+  .audit h2{display:flex;justify-content:space-between;align-items:center}
+  .audit .log{max-height:230px;overflow-y:auto;padding:8px 12px;font-family:'Consolas',monospace;font-size:11px;background:#2C2C2A;color:#e9e7df}
+  .audit .row{padding:6px 4px;border-bottom:1px solid #3a3a37;line-height:1.5}
+  .audit .row:last-child{border-bottom:none}
+  .audit .ref{color:#9FE1CB;font-weight:700}
+  .audit .empty2{color:#888780;padding:14px 4px}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--muted);padding:10px 16px;border-top:1px solid var(--line)}
+  .legend span{display:inline-flex;align-items:center;gap:5px}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .note{font-size:11px;color:var(--muted);text-align:center;margin:6px auto 22px;max-width:1180px;padding:0 16px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">M</div>
+  <div>
+    <h1>Mia · Meridian Bank</h1>
+    <div class="sub">Customer experience agent — proof of concept</div>
+  </div>
+  <div class="spacer"></div>
+  <label class="channel">Channel:
+    <select id="channel">
+      <option value="Website chatbot">Website chatbot</option>
+      <option value="App help centre">App help centre</option>
+    </select>
+  </label>
+  <button class="btn-reset" id="reset">Reset</button>
+</header>
+
+<div class="wrap">
+  <!-- CHAT -->
+  <div class="panel">
+    <h2>Chat with Mia</h2>
+    <div class="chat" id="chat"></div>
+    <div class="composer">
+      <div class="chips" id="chips"></div>
+      <div class="inrow">
+        <input id="input" type="text" placeholder="Ask Mia a question…" autocomplete="off"/>
+        <button id="send">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEHIND THE SCENES -->
+  <div class="panel">
+    <h2>Behind the scenes</h2>
+    <div class="bts" id="bts"><div class="empty">Ask a question to see how Mia routes it — journey, tools, confidence and outcome.</div></div>
+    <div class="audit">
+      <h2>Audit trail <span id="auditcount" style="font-weight:400;text-transform:none;letter-spacing:0">0 records</span></h2>
+      <div class="log" id="log"><div class="empty2">Every read &amp; action will be logged here.</div></div>
+    </div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--green)"></i>Resolve at agent</span>
+      <span><i class="dot" style="background:var(--amber)"></i>Triage + escalate</span>
+      <span><i class="dot" style="background:var(--pink)"></i>Escalate now</span>
+    </div>
+  </div>
+</div>
+<div class="note">Prototype only · scripted logic over mocked data · no real customer information and no banking actions are performed.</div>
+
+<script>
+(function(){
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const chat=$("chat"), btsEl=$("bts"), logEl=$("log"), input=$("input");
+
+  // ---- mocked session ----
+  const customer = { name:"Alex Morgan", id:"CUST-4471", card:"•••• 4419", location:"London, UK" };
+  let convId, refSeq, verified, audit, pending;
+
+  function reset(){
+    convId = "CONV-" + Math.floor(1000+Math.random()*9000);
+    refSeq = 0; verified=false; audit=[]; pending=null;
+    chat.innerHTML=""; logEl.innerHTML='<div class="empty2">Every read &amp; action will be logged here.</div>';
+    btsEl.innerHTML='<div class="empty">Ask a question to see how Mia routes it — journey, tools, confidence and outcome.</div>';
+    $("auditcount").textContent="0 records";
+    addBot("Hi, I'm Mia, your Meridian Bank assistant. I can help with charge disputes, credit card applications and loan enquiries. What can I help you with today?");
+  }
+  const now = () => new Date().toLocaleTimeString('en-GB');
+  const nextRef = p => p + "-" + String(++refSeq).padStart(3,"0");
+
+  // ---- rendering ----
+  function addUser(t){ const d=document.createElement("div"); d.className="msg user"; d.textContent=t; chat.appendChild(d); scroll(); }
+  function addBot(t){ const d=document.createElement("div"); d.className="msg bot"; d.textContent=t; chat.appendChild(d); scroll(); return d; }
+  function addSys(t){ const d=document.createElement("div"); d.className="msg sys"; d.textContent=t; chat.appendChild(d); scroll(); }
+  function scroll(){ chat.scrollTop=chat.scrollHeight; }
+
+  function logAudit(action, conf, outcome){
+    const ref = nextRef(audit.refPrefix || "LOG");
+    audit.push(1);
+    if(logEl.querySelector(".empty2")) logEl.innerHTML="";
+    const row=document.createElement("div"); row.className="row";
+    row.innerHTML = '<span class="ref">'+ref+'</span> · '+now()+' · conf '+(conf==null?"—":conf.toFixed(2))+
+                    '<br>'+action+' → <b>'+outcome+'</b>';
+    logEl.appendChild(row); logEl.scrollTop=logEl.scrollHeight;
+    $("auditcount").textContent = audit.length + (audit.length===1?" record":" records");
+    return ref;
+  }
+
+  const tierMeta = {
+    HIGH:  {color:"var(--green)",  bg:"var(--green-l)", d:"var(--green-d)", route:"Resolve at agent level"},
+    MEDIUM:{color:"var(--amber)",  bg:"var(--amber-l)", d:"var(--amber-d)", route:"Triage → compile packet → escalate"},
+    LOW:   {color:"var(--pink)",   bg:"var(--pink-l)",  d:"var(--pink-d)",  route:"Escalate immediately"}
+  };
+
+  function renderBTS(o){
+    const m=tierMeta[o.tier];
+    btsEl.innerHTML =
+      field("Channel", $("channel").value) +
+      field("Detected journey", o.journey) +
+      '<div class="field"><div class="k">Identity</div><div class="v">'+(verified?'✓ verified ('+customer.id+')':'not verified')+'</div></div>' +
+      '<div class="field"><div class="k">Tools called</div><div class="toolchips">'+o.tools.map(t=>'<span class="tc">'+t+'</span>').join("")+'</div></div>' +
+      '<div class="field"><div class="k">Confidence</div><div class="v">'+o.conf.toFixed(2)+'</div>'+
+        '<div class="meter"><div style="width:'+Math.round(o.conf*100)+'%;background:'+m.color+'"></div></div></div>' +
+      '<div class="field"><div class="k">Tier &amp; route</div><div style="margin-top:3px"><span class="pill" style="background:'+m.bg+';color:'+m.d+'">'+o.tier+'</span> '+m.route+'</div></div>' +
+      (o.team?field("Escalation team", o.team):"");
+  }
+  const field=(k,v)=>'<div class="field"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>';
+
+  // ---- intent classification (scripted) ----
+  function classify(text){
+    const t=text.toLowerCase();
+    const has=arr=>arr.some(w=>t.includes(w));
+    if(has(["loan","borrow","mortgage","repayment","instal"])) return "loan";
+    if(has(["credit card","new card","card application","apply for a card"]) ||
+       (t.includes("card")&&has(["apply","application","eligib","get a"]))) return "card";
+    if(has(["charge","charged","transaction","payment","dispute","refund","debit",
+            "didn't","did not","don't recogn","dont recogn","not recogn","unrecogn","unknown",
+            "double","duplicate","twice","again","fraud","scam","stolen","unauthor","suspicious","wrong"])) return "dispute";
+    return "unknown";
+  }
+  const amountIn = t => { const m=t.replace(/,/g,"").match(/£\s?(\d+(?:\.\d{1,2})?)/); return m?parseFloat(m[1]):null; };
+
+  // ---- the agent turn ----
+  function handle(text){
+    pending=null;
+    document.querySelectorAll('.confirm').forEach(e=>e.remove());
+    const journey=classify(text);
+    if(journey==="unknown"){
+      addBot("I want to make sure I point you to the right place. I can help with three things: disputing a charge, applying for a credit card, or a loan enquiry. Which is closest to what you need?");
+      return;
+    }
+    typing(()=>route(journey,text));
+  }
+
+  function typing(cb){
+    const t=document.createElement("div"); t.className="typing"; t.textContent="Mia is working…"; chat.appendChild(t); scroll();
+    setTimeout(()=>{ t.remove(); cb(); if(pending) showConfirm(); }, 650);
+  }
+
+  function ensureVerified(prefix){
+    audit.refPrefix=prefix;
+    if(!verified){
+      verified=true;
+      logAudit("verify_identity (app session, "+customer.location+")", 1.0, "identity confirmed");
+    }
+  }
+
+  function route(journey,text){
+    if(journey==="dispute") return dispute(text);
+    if(journey==="card")    return card(text);
+    if(journey==="loan")    return loan(text);
+  }
+
+  // ===== DISPUTES =====
+  function dispute(text){
+    ensureVerified("DSP");
+    const t=text.toLowerCase(), amt=amountIn(text);
+    const fraud=["fraud","scam","stolen","unauthor","didn't make","did not make","never made","never bought","abroad","overseas","foreign","someone else","not me"].some(w=>t.includes(w));
+    const dup =["double","duplicate","twice","two times","charged again","same charge","2 times"].some(w=>t.includes(w));
+    const sub =["subscription","recurring","monthly","membership","renew"].some(w=>t.includes(w));
+    logAudit("get_transaction (card "+customer.card+")", null, "retrieved recent transactions");
+    logAudit("check_dispute_policy", null, "policy matched");
+
+    if(fraud){
+      const conf=0.34;
+      renderBTS({journey:"Charge disputes",tools:["verify_identity","get_transaction","check_dispute_policy","freeze_card","escalate_to_human"],conf,tier:"LOW",team:"Fraud team"});
+      addBot("This looks like it could be fraud"+(amt?(" on a £"+amt.toFixed(2)+" charge"):"")+", so I'm treating it with caution. To stop anything further, I'd recommend freezing card "+customer.card+" right now. Shall I freeze it and pass this straight to our Fraud team?");
+      pending={confirm:()=>{
+        const r1=logAudit("freeze_card (confirmed=true)",conf,"card frozen");
+        const ref=logAudit("escalate_to_human → Fraud team",conf,"escalated with case summary");
+        addBot("Done — card "+customer.card+" is frozen and our Fraud team has the case (ref "+ref+"). A specialist will call you on the number on file. You won't need to repeat anything — they have the full summary.");
+      }};
+      return;
+    }
+    if(dup){
+      if(amt!=null && amt<100){
+        const conf=0.92;
+        renderBTS({journey:"Charge disputes",tools:["verify_identity","get_transaction","check_dispute_policy","raise_dispute","issue_provisional_credit"],conf,tier:"HIGH",team:null});
+        addBot("I can see two identical £"+amt.toFixed(2)+" charges close together — that's a clear duplicate under our auto-resolve limit. I can raise the dispute and credit the £"+amt.toFixed(2)+" back to you provisionally right now. Shall I go ahead?");
+        pending={confirm:()=>{
+          const ref=logAudit("raise_dispute (confirmed=true)",conf,"dispute raised");
+          logAudit("issue_provisional_credit £"+amt.toFixed(2)+" (confirmed=true)",conf,"credit applied");
+          addBot("All sorted — dispute "+ref+" is raised and £"+amt.toFixed(2)+" is back in your account as provisional credit, usually visible within a few minutes. Resolved without needing a human. Anything else?");
+        }};
+        return;
+      }
+      // duplicate but large or amount unknown → route down
+      const conf=0.63;
+      renderBTS({journey:"Charge disputes",tools:["verify_identity","get_transaction","check_dispute_policy","escalate_to_human"],conf,tier:"MEDIUM",team:"Disputes team"});
+      const ref=logAudit("escalate_to_human → Disputes team",conf,"triaged + escalated");
+      addBot("That does look like a possible duplicate"+(amt?(" of £"+amt.toFixed(2)):"")+", but it's above the amount I can auto-resolve, so I'm routing it down a tier to be safe. I've gathered the details into a case (ref "+ref+") and handed it to our Disputes team — they'll confirm and process the refund, no need to re-explain.");
+      return;
+    }
+    if(sub){
+      const conf=0.66;
+      renderBTS({journey:"Charge disputes",tools:["verify_identity","get_transaction","check_dispute_policy","escalate_to_human"],conf,tier:"MEDIUM",team:"Disputes team"});
+      const ref=logAudit("escalate_to_human → Disputes team",conf,"triaged + escalated");
+      addBot("Unrecognised recurring charges often turn out to be a forgotten subscription, but I don't want to guess. I've compiled the transaction details into a case (ref "+ref+") and passed it to our Disputes team to investigate and reverse if it's not yours.");
+      return;
+    }
+    // generic dispute
+    const conf=0.6;
+    renderBTS({journey:"Charge disputes",tools:["verify_identity","get_transaction","check_dispute_policy","escalate_to_human"],conf,tier:"MEDIUM",team:"Disputes team"});
+    const ref=logAudit("escalate_to_human → Disputes team",conf,"triaged + escalated");
+    addBot("Thanks — I've pulled up the charge"+(amt?(" of £"+amt.toFixed(2)):"")+" and checked it against our dispute policy. To be safe I'm routing this to our Disputes team with everything attached (ref "+ref+"). Could you tell me the merchant name or date if you have it? It'll speed them up.");
+  }
+
+  // ===== CREDIT CARD APPLICATIONS =====
+  function card(text){
+    ensureVerified("CRD");
+    const t=text.toLowerCase();
+    const browsing=["what cards","which cards","what credit cards","offer","options","compare","types","tell me about"].some(w=>t.includes(w))
+                   && !["apply","eligib","can i get","qualify"].some(w=>t.includes(w));
+    logAudit("get_card_products", null, "catalogue returned");
+    if(browsing){
+      const conf=0.9;
+      renderBTS({journey:"Credit card applications",tools:["verify_identity","get_card_products"],conf,tier:"HIGH",team:null});
+      addBot("Happy to help. Meridian currently offers three cards:\n• Everyday — no annual fee, 0% on purchases for 6 months\n• Rewards — 1% cashback, £25/yr\n• Travel — no FX fees, £60/yr\nWould you like to check your eligibility for any of these?");
+      return;
+    }
+    const conf=0.62;
+    logAudit("check_card_eligibility", conf, "pre-screen passed");
+    logAudit("start_card_application", conf, "application drafted");
+    renderBTS({journey:"Credit card applications",tools:["verify_identity","get_card_products","check_card_eligibility","start_card_application"],conf,tier:"MEDIUM",team:"Lending team"});
+    const ref=logAudit("escalate_to_human → Lending team",conf,"credit decision referred");
+    addBot("Good news — you pass the initial checks, so I've started an application for you (ref "+ref+"). The actual credit decision is always made by a person, never by me, so our Lending team will review affordability and confirm your limit. They'll be in touch with next steps.");
+  }
+
+  // ===== LOAN ENQUIRIES =====
+  function loan(text){
+    ensureVerified("LON");
+    const t=text.toLowerCase(), amt=amountIn(text);
+    const quote=["how much","repayment","monthly","estimate","quote","rate","interest","cost","calculator"].some(w=>t.includes(w))
+                && !["apply","formal","go ahead","proceed","take out"].some(w=>t.includes(w));
+    logAudit("get_loan_products", null, "rates returned");
+    if(quote){
+      const conf=0.88;
+      const principal = amt || 10000;
+      const monthly = (principal*1.069/36).toFixed(2); // illustrative 6.9% APR over 3yr
+      logAudit("estimate_repayment (£"+principal+", 36m)", conf, "estimate computed");
+      renderBTS({journey:"Loan enquiries",tools:["verify_identity","get_loan_products","estimate_repayment"],conf,tier:"HIGH",team:null});
+      addBot("Here's an illustrative quote: a £"+principal.toLocaleString()+" personal loan at 6.9% APR over 3 years works out to about £"+monthly+" a month. That's an estimate only — would you like to start a formal enquiry? (A person handles the actual approval.)");
+      return;
+    }
+    const conf=0.6;
+    logAudit("start_loan_enquiry", conf, "enquiry created");
+    renderBTS({journey:"Loan enquiries",tools:["verify_identity","get_loan_products","start_loan_enquiry"],conf,tier:"MEDIUM",team:"Lending team"});
+    const ref=logAudit("escalate_to_human → Lending team",conf,"affordability referred");
+    addBot("I've opened a loan enquiry for you (ref "+ref+"). Because affordability and approval are always decided by a person, I'm passing this to our Lending team — they'll assess it properly and follow up. Nothing is approved automatically.");
+  }
+
+  // ---- confirm gate ----
+  function showConfirm(){
+    const d=document.createElement("div"); d.className="confirm";
+    const y=document.createElement("button"); y.className="yes"; y.textContent="Yes, go ahead";
+    const n=document.createElement("button"); n.className="no"; n.textContent="No";
+    d.appendChild(y); d.appendChild(n); chat.appendChild(d); scroll();
+    y.onclick=()=>{ d.remove(); if(!pending) return; addSys("✓ confirmed"); const p=pending; pending=null; typing(p.confirm); };
+    n.onclick=()=>{ d.remove(); pending=null; addBot("No problem — I won't take any action. Is there anything else I can help with?"); };
+  }
+
+  // ---- input handling ----
+  function submit(){
+    const v=input.value.trim(); if(!v) return;
+    input.value=""; addUser(v); handle(v);
+  }
+  $("send").onclick=submit;
+  input.addEventListener("keydown",e=>{ if(e.key==="Enter") submit(); });
+  $("reset").onclick=reset;
+
+  // suggested chips
+  const examples=[
+    "I was charged £4.99 twice for the same coffee",
+    "There's a £820 payment to a shop abroad I never made",
+    "I don't recognise a recurring £12.99 charge",
+    "What credit cards do you offer?",
+    "Can I apply for a credit card?",
+    "How much would a £10,000 loan cost a month?"
+  ];
+  const chipsEl=$("chips");
+  examples.forEach(x=>{ const c=document.createElement("button"); c.className="chip"; c.textContent=x;
+    c.onclick=()=>{ input.value=x; submit(); }; chipsEl.appendChild(c); });
+
+  reset();
+})();
+</script>
+</body>
+</html>
