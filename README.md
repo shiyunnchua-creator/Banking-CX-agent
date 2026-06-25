@@ -93,7 +93,13 @@ Run scripted conversations across all three confidence tiers and read the audit 
 
 ## Part 2 — The three use cases
 
-## Live demo (no setup): a scripted UI walkthrough of the three journeys and confidence routing. For genuine Claude reasoning, run the Colab notebook.
+## Live demo (no setup)
+
+[**▶ Open the interactive demo**](https://shiyunnchua-creator.github.io/Banking-CX-agent/mia-poc-demo.html)
+
+A scripted, browser-based walkthrough of all three journeys — **charge disputes**, **credit card applications**, and **loan enquiries**. Type a question (or click a suggested one) and watch Mia classify the journey, verify identity, call its tools, score its confidence, and either resolve at agent level or escalate.
+
+> **Note:** the demo uses scripted keyword logic over mocked data — no API key, no real customer information, and no banking actions. For genuine Claude reasoning, run the [Colab notebook](notebooks/Banking_CX_Agent_Session.ipynb).
 
 ## Workflow
 
